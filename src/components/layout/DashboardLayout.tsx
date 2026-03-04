@@ -83,6 +83,7 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               >
                 {timeStamps.map((timeStamp, key) => (
                   <span
+                    key={key}
                     onClick={() => selectTimeStamp(key)}
                     className="px-3 py-2 rounded-md hover:bg-gray-800 transition-colors duration-300 cursor-pointer w-full text-nowrap"
                   >

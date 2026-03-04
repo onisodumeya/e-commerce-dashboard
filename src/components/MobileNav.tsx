@@ -1,12 +1,4 @@
-import { MdAccountCircle } from "react-icons/md";
-import {
-  LayoutDashboard,
-  Receipt,
-  Package,
-  PieChart,
-  LogOut,
-  User2,
-} from "lucide-react";
+import { LayoutDashboard, Receipt, Package, User2 } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
@@ -16,7 +8,6 @@ function MobileNav() {
     { path: "/sales", label: "Sales", icon: Receipt },
     { path: "/customers", label: "Customers", icon: User2 },
     { path: "/Products", label: "Products", icon: Package },
-    { path: "/reports", label: "Reports", icon: PieChart },
   ];
 
   return (

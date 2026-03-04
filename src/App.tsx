@@ -8,7 +8,6 @@ import Signup from "./pages/auth-pages/Signup";
 import Sales from "./pages/Sales";
 import Customers from "./pages/Customers";
 import Products from "./pages/Products";
-import Reports from "./pages/Reports";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
         <Route path="/sales" element={<Sales />} />
         <Route path="/customers" element={<Customers />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/reports" element={<Reports />} />
       </Routes>
     </Router>
   );

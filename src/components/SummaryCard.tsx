@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { TrendingDown, TrendingUp } from "lucide-react";
 
 interface SummaryCardProps {
