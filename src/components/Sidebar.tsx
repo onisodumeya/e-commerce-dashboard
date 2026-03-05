@@ -17,7 +17,7 @@ function Sidebar() {
       <div className="flex items-center gap-2 bg-gray-800 shadow-sm py-2 px-3 w-full rounded-lg mb-5 text-white">
         <MdAccountCircle size={40} />
         <div className="flex flex-col items-start text-sm">
-          <p className="font-bold">User</p>
+          <p className="font-bold">Admin</p>
           <p className="text-gray-300">Frank Castle</p>
         </div>
       </div>

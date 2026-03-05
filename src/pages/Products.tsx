@@ -1,62 +1,143 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashBoardLayout from "../components/layout/DashboardLayout";
 import ProductModal from "../components/ProductModal";
 
 interface ProductProps {
-  coverImageIndex: number;
-  id: number;
-  images: [];
+  id: string;
+  images: string[];
   title: string;
   description: string;
   price: number;
   sizes: string[];
+  coverImageIndex: number;
+  option: string;
 }
 
-const fetchedProducts = localStorage.getItem("products");
-
-const products: ProductProps[] = fetchedProducts
-  ? JSON.parse(fetchedProducts)
-  : [];
-
 function Products() {
+  const [products, setProducts] = useState<ProductProps[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<ProductProps | null>(
+    null,
+  );
 
-  function openModal() {
-    setIsModalOpen(true);
-  }
+  // Load products from localStorage on mount
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
-  function closeModal() {
-    setIsModalOpen(false);
-  }
-
-  const i = 2;
-
-  const handleDelete = (id: number) => {
+  // Load products from localStorage
+  const loadProducts = () => {
     try {
-      // 2. Filter out the product with matching ID
-      const updatedProducts = products.filter((product) => product.id !== id);
+      const fetchedProducts = localStorage.getItem("products");
+      const parsedProducts: ProductProps[] = fetchedProducts
+        ? JSON.parse(fetchedProducts)
+        : [];
+      setProducts(parsedProducts);
+    } catch (error) {
+      console.error("Error loading products:", error);
+      setProducts([]);
+    }
+  };
 
-      // 3. Save the remaining products back to localStorage
+  // Open modal for adding new product
+  const openAddModal = () => {
+    setEditingProduct(null);
+    setIsModalOpen(true);
+  };
+
+  // Open modal for editing existing product
+  const openEditModal = (product: ProductProps) => {
+    setEditingProduct(product);
+    setIsModalOpen(true);
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingProduct(null);
+  };
+
+  // Handle save (both add and edit)
+  const handleSaveProduct = (product: ProductProps) => {
+    try {
+      const existingProducts = JSON.parse(
+        localStorage.getItem("products") || "[]",
+      );
+
+      if (editingProduct) {
+        // EDIT MODE - Update existing product
+        const index = existingProducts.findIndex(
+          (p: ProductProps) => p.id === product.id,
+        );
+        if (index !== -1) {
+          existingProducts[index] = product;
+        }
+      } else {
+        // ADD MODE - Add new product
+        existingProducts.push(product);
+      }
+
+      // Save to localStorage
+      localStorage.setItem("products", JSON.stringify(existingProducts));
+
+      // Reload products
+      loadProducts();
+      closeModal();
+    } catch (error) {
+      console.error("Error saving product:", error);
+      alert("Failed to save product. Please try again.");
+    }
+  };
+
+  // Handle delete
+  const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product? This action cannot be undone.",
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const updatedProducts = products.filter((product) => product.id !== id);
       localStorage.setItem("products", JSON.stringify(updatedProducts));
-      window.location.reload();
+      loadProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
+      alert("Failed to delete product. Please try again.");
     }
   };
 
   return (
     <>
-      <ProductModal openModal={isModalOpen} closeModal={closeModal} />
+      <ProductModal
+        openModal={isModalOpen}
+        closeModal={closeModal}
+        onSave={handleSaveProduct}
+        productToEdit={editingProduct}
+      />
+
       <DashBoardLayout>
-        <button
-          onClick={openModal}
-          className="text-white px-3 py-2 bg-blue-700 rounded-md hover:bg-blue-800 cursor-pointer transition-colors duration-300"
-        >
-          Add New Product
-        </button>
+        <div className="mb-4">
+          <button
+            onClick={openAddModal}
+            className="text-white px-4 py-2 bg-blue-700 rounded-md hover:bg-blue-800 cursor-pointer transition-colors duration-300"
+          >
+            Add New Product
+          </button>
+        </div>
+
         {products.length === 0 ? (
-          <div className="flex items-center justify-center h-full min-h-[80vh]">
-            <p className="text-white">No Products</p>
+          <div className="flex flex-col items-center justify-center h-full min-h-[80vh] gap-4">
+            <p className="text-white text-xl">No Products Yet</p>
+            <p className="text-gray-400">
+              Add your first product to get started
+            </p>
+            <button
+              onClick={openAddModal}
+              className="text-white px-4 py-2 bg-blue-700 rounded-md hover:bg-blue-800 cursor-pointer transition-colors duration-300"
+            >
+              Add Product
+            </button>
           </div>
         ) : (
           <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
@@ -69,51 +150,83 @@ function Products() {
                   <th className="px-3 py-2 text-start">Description</th>
                   <th className="px-3 py-2 text-start">Price</th>
                   <th className="px-3 py-2 text-start">Sizes</th>
-                  <th className="px-3 py-2 text-start"></th>
+                  <th className="px-3 py-2 text-start">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, key) => (
+                {products.map((product, index) => (
                   <tr
-                    key={key}
-                    className={`border-b-2 border-gray-700 transition-colors duration-300 ease-in-out ${(key + 1) % 2 == 0 ? "bg-gray-800 hover:bg-gray-900" : "hover:bg-gray-900"}`}
+                    key={product.id}
+                    className={`border-b-2 border-gray-700 transition-colors duration-300 ease-in-out ${
+                      (index + 1) % 2 === 0
+                        ? "bg-gray-800 hover:bg-gray-900"
+                        : "hover:bg-gray-900"
+                    }`}
                   >
-                    <td className="text-start py-2 px-3">{key + 1}</td>
+                    <td className="text-start py-2 px-3">{index + 1}</td>
                     <td className="px-3 py-2">
-                      <div
-                        className="h-10 w-10 rounded-full border-2 border-white"
-                        style={{
-                          background: `url(${product.images[product.coverImageIndex]})`,
-                          backgroundSize: `cover`,
-                          backgroundPosition: `center`,
-                        }}
-                      ></div>
+                      {product.images && product.images.length > 0 ? (
+                        <div
+                          className="h-10 w-10 rounded-full border-2 border-white"
+                          style={{
+                            background: `url(${product.images[product.coverImageIndex || 0]})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                          }}
+                        />
+                      ) : (
+                        <div className="h-10 w-10 rounded-full border-2 border-white bg-gray-700 flex items-center justify-center">
+                          <span className="text-xs">No img</span>
+                        </div>
+                      )}
                     </td>
                     <td className="px-3 py-2">{product.title}</td>
                     <td className="px-3 py-2 text-sm">
-                      {product.description.slice(0, 30)}...
+                      {product.description
+                        ? product.description.slice(0, 30) + "..."
+                        : "No description"}
                     </td>
-                    <td className="px-3 py-2">₦{product.price}</td>
                     <td className="px-3 py-2">
-                      <div className="flex items-center gap-2">
-                        {product.sizes.map((size, key) => (
-                          <p key={key} className="p-0 m-0">
-                            {key <= i ? size + " " : null}
-                            {key == i ? "..." : null}
-                          </p>
-                        ))}
+                      ₦{product.price.toLocaleString()}
+                    </td>
+                    <td className="px-3 py-2">
+                      <div className="flex items-center gap-1">
+                        {product.sizes && product.sizes.length > 0 ? (
+                          <>
+                            {product.sizes.slice(0, 3).map((size, idx) => (
+                              <span key={idx} className="text-sm">
+                                {size}
+                                {idx < 2 && idx < product.sizes.length - 1
+                                  ? ","
+                                  : ""}
+                              </span>
+                            ))}
+                            {product.sizes.length > 3 && (
+                              <span className="text-sm">...</span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-gray-400 text-sm">
+                            No sizes
+                          </span>
+                        )}
                       </div>
                     </td>
-                    <td className="px-3 py-2 flex gap-3">
-                      <button className="px-3 py-1 rounded-md text-sm bg-blue-950 hover:bg-blue-900 transition-colors duration-300 cursor-pointer">
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(product.id)}
-                        className="px-3 py-1 rounded-md text-sm bg-red-900 hover:bg-red-800 transition-colors duration-300 cursor-pointer"
-                      >
-                        Delete
-                      </button>
+                    <td className="px-3 py-2">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => openEditModal(product)}
+                          className="px-3 py-1 rounded-md text-sm bg-blue-700 hover:bg-blue-600 transition-colors duration-300 cursor-pointer"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(product.id)}
+                          className="px-3 py-1 rounded-md text-sm bg-red-700 hover:bg-red-600 transition-colors duration-300 cursor-pointer"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
