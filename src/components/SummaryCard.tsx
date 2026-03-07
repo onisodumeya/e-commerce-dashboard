@@ -20,19 +20,19 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
   currency,
 }) => {
   return (
-    <div className="p-5 bg-gray-800 rounded-lg flex flex-col justify-between gap-5 shrink-0 w-72 lg:w-auto">
+    <div className="p-5 bg-white dark:bg-gray-800 rounded-lg flex flex-col justify-between gap-5 shrink-0 w-72 lg:w-auto">
       <div className="flex gap-2 items-center">
         <div className={`p-2 rounded-full ${iconBg}`}>{children}</div>
         <h2 className="text-xl font-medium">{title}</h2>
       </div>
       <div className="flex w-full justify-between items-end gap-10">
-        <span className="text-3xl gap-2 flex items-end">
-          <p className="text-3xl">
+        <span className="text-2xl gap-2 flex items-end">
+          <p className="text-2xl">
             {currency ? "$" : ""}
-            {currentAmount}
+            {currentAmount.toLocaleString()}
           </p>
           {positiveChange ? (
-            <TrendingUp className="text-green-500" />
+            <TrendingUp className="text-green-500" size={20} />
           ) : (
             <TrendingDown className="text-red-500" />
           )}
@@ -40,8 +40,8 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
         <p
           className={`py-1 px-2 rounded-md text-nowrap ${positiveChange ? "text-green-500 bg-green-400/10" : "text-red-500 bg-red-400/10"}`}
         >
-          {positiveChange ? "+" : "-"} {currency ? "$" : ""}
-          {changeInAmount}
+          {positiveChange ? "+" : "-"}
+          {changeInAmount}%
         </p>
       </div>
     </div>

@@ -2,27 +2,23 @@ import Sidebar from "../Sidebar";
 import MobileNav from "../MobileNav";
 import { useLocation } from "react-router-dom";
 import { LiaMoon, LiaSun } from "react-icons/lia";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  onSendData: (data: any) => void;
 }
 
-// interface;
-
-const DashBoardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+const DashBoardLayout: React.FC<DashboardLayoutProps> = ({
+  children,
+  onSendData,
+}) => {
+  const { theme, toggleTheme } = useTheme();
   const [isDarkMode, setLightMode] = useState(true);
 
-  const toggleTheme = () => {
-    if (isDarkMode == true) {
-      setLightMode(false);
-      console.log("Light");
-    } else {
-      setLightMode(true);
-      console.log("Dark");
-    }
-  };
+  console.log(theme);
 
   const location = useLocation();
   const path = location.pathname;
@@ -51,13 +47,35 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     }
   };
 
-  function selectTimeStamp(value: number) {
-    setActive(value);
-    setIsTimeStampMenuOpen(false);
+  // function selectTimeStamp(value: number) {
+  //   setActive(value);
+  //   setIsTimeStampMenuOpen(false);
+  // }
+
+  const [savedTime, setSavedTime] = useState(localStorage.getItem("timeStamp"));
+
+  const [option, setOption] = useState(() => {
+    return localStorage.getItem("timeStamp") || "Today"; // Default value
+  });
+
+  const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
+
+  const openOptionsMenu = () => {
+    if (isOptionsMenuOpen === false) {
+      setIsOptionsMenuOpen(true);
+    } else {
+      setIsOptionsMenuOpen(false);
+    }
+  };
+
+  function handleOptions(value: string) {
+    setOption(value);
+    onSendData(value);
+    localStorage.setItem("timeStamp", value);
   }
 
   return (
-    <div className="p-2 lg:p-5 lg:pl-64 flex items-start min-h-screen bg-gray-950">
+    <div className="p-2 lg:p-5 lg:pl-64 flex items-start min-h-screen bg-white dark:bg-gray-950">
       <Sidebar />
       <MobileNav />
       <section className="flex flex-col gap-3 w-full py-2 px-3 pb-20 lg:pb-0">
@@ -66,42 +84,37 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             {path === "/" ? "Overview" : locationName}
           </h1>
           <div className={`gap-3 items-center flex`}>
-            <div
-              className={`relative w-auto ${path === "/reports" ? "flex" : "hidden"}`}
-            >
-              <div
-                onClick={openTimeStampMenuMenu}
-                className="px-3 py-2 bg-gray-800 rounded-md flex items-end gap-2 cursor-pointer hover:bg-gray-900 transition-colors duration-300"
+            <div className="w-full flex items-center justify-between">
+              <button
+                className={`text-gray-300 text-sm items-center cursor-pointer relative bg-gray-900 hover:bg-gray-800 p-2 rounded-lg transition-all duration-300 ${path !== "/" ? "hidden" : "flex"}`}
+                onClick={openOptionsMenu}
               >
                 <ChevronDown
-                  className={` transition-transform duration-300 ${isTimeStampMenuOpen ? "rotate-180" : ""}`}
+                  className={`transition-all duration-300 ${isOptionsMenuOpen ? "rotate-180" : ""}`}
                 />
-                <span>{timeStamps[active]}</span>
-              </div>
-              <div
-                className={`flex-col gap-3 items-start bg-gray-900 px-3 py-2 rounded-md absolute z-50 top-12 shadow-md ${isTimeStampMenuOpen ? "flex" : "hidden"}`}
-              >
-                {timeStamps.map((timeStamp, key) => (
-                  <span
-                    key={key}
-                    onClick={() => selectTimeStamp(key)}
-                    className="px-3 py-2 rounded-md hover:bg-gray-800 transition-colors duration-300 cursor-pointer w-full text-nowrap"
-                  >
-                    {timeStamp}
-                  </span>
-                ))}
-              </div>
+                <span>{option}</span>
+
+                <div
+                  className={`w-fit absolute flex flex-col gap-3 top-[120%] -left-10 md:left-0 items-start bg-gray-700 z-10 p-3 rounded-lg transition-all duration-300 ${!isOptionsMenuOpen ? "hidden" : ""}`}
+                >
+                  {timeStamps.map((timeStamp, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleOptions(timeStamp)}
+                      className="p-2 hover:bg-gray-800 w-full rounded-md text-start text-nowrap transition-colors duration-200"
+                    >
+                      {timeStamp}
+                    </button>
+                  ))}
+                </div>
+              </button>
             </div>
-            <div
+            {/* <div
               onClick={toggleTheme}
               className="bg-transparent p-1 rounded-full hover:scale-105 transition-all hover:bg-white/10 duration-300 cursor-pointer"
             >
-              {isDarkMode === true ? (
-                <LiaMoon size={30} />
-              ) : (
-                <LiaSun size={30} />
-              )}
-            </div>
+              {theme === "dark" ? <LiaMoon size={30} /> : <LiaSun size={30} />}
+            </div> */}
           </div>
         </header>
         {children}

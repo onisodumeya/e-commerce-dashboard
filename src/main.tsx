@@ -1,9 +1,7 @@
-// import { StrictMode } from "react";
 import React from "react";
-// import { createRoot } from "react-dom/client";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import { ThemeProvider } from "./context/ThemeContext.tsx";
+import App from "./App";
+import { ThemeProvider } from "./context/ThemeContext";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

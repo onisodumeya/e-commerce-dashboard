@@ -11,6 +11,7 @@ interface ProductProps {
   sizes: string[];
   coverImageIndex: number;
   option: string;
+  stock: number;
 }
 
 function Products() {
@@ -107,6 +108,8 @@ function Products() {
     }
   };
 
+  const handleDataFromChild = (data: any) => {};
+
   return (
     <>
       <ProductModal
@@ -116,7 +119,7 @@ function Products() {
         productToEdit={editingProduct}
       />
 
-      <DashBoardLayout>
+      <DashBoardLayout onSendData={handleDataFromChild}>
         <div className="mb-4">
           <button
             onClick={openAddModal}
@@ -150,7 +153,8 @@ function Products() {
                   <th className="px-3 py-2 text-start">Description</th>
                   <th className="px-3 py-2 text-start">Price</th>
                   <th className="px-3 py-2 text-start">Sizes</th>
-                  <th className="px-3 py-2 text-start">Actions</th>
+                  <th className="px-3 py-2 text-start">Stock</th>
+                  <th className="px-3 py-2 text-start"></th>
                 </tr>
               </thead>
               <tbody>
@@ -211,6 +215,13 @@ function Products() {
                           </span>
                         )}
                       </div>
+                    </td>
+                    <td className="px-3 py-2">
+                      <p
+                        className={`${product.stock === 0 ? "text-red-500 p-1 bg-red-500/20 rounded-full text-center" : ""}`}
+                      >
+                        {product.stock === 0 ? "Out of stock" : product.stock}
+                      </p>
                     </td>
                     <td className="px-3 py-2">
                       <div className="flex gap-2">

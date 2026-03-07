@@ -11,12 +11,10 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  // Check localStorage first, then system preference, default to light
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem("theme") as Theme;
     if (saved) return saved;
 
-    // Check system preference
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       return "dark";
     }
@@ -25,17 +23,19 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    // Apply theme to document
     const root = document.documentElement;
 
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
+    // Remove both classes first
+    root.classList.remove("light", "dark");
+
+    // Add the current theme class
+    root.classList.add(theme);
 
     // Save to localStorage
     localStorage.setItem("theme", theme);
+
+    console.log("Theme applied:", theme); // ✅ Debug log
+    console.log("HTML classes:", root.className); // ✅ Debug log
   }, [theme]);
 
   const toggleTheme = () => {
@@ -49,7 +49,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook to use theme
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {

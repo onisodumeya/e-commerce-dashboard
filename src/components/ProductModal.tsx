@@ -11,6 +11,7 @@ interface ProductProps {
   sizes: string[];
   coverImageIndex: number;
   option: string;
+  stock: number;
 }
 
 interface HandleOptionsProps {
@@ -58,6 +59,7 @@ const ProductModal = ({
     description: "",
     price: 0,
     sizes: [] as string[],
+    stock: 0,
   });
 
   // Auto-fill form when editing
@@ -69,6 +71,7 @@ const ProductModal = ({
         description: productToEdit.description || "",
         price: productToEdit.price || 0,
         sizes: productToEdit.sizes || [],
+        stock: productToEdit.stock || 0,
       });
       setImages(productToEdit.images || []);
       setCoverImageIndex(productToEdit.coverImageIndex || 0);
@@ -86,6 +89,7 @@ const ProductModal = ({
       description: "",
       price: 0,
       sizes: [],
+      stock: 0,
     });
     setImages([]);
     setCoverImageIndex(0);
@@ -187,6 +191,7 @@ const ProductModal = ({
       sizes: formData.sizes,
       coverImageIndex: coverImageIndex,
       option: option,
+      stock: formData.stock,
     };
 
     // Pass to parent
@@ -300,6 +305,21 @@ const ProductModal = ({
             }
             className="bg-white/10 border border-white/50 rounded-md py-1 px-3 min-h-[100px]"
             placeholder="Enter product description"
+          />
+        </div>
+
+        {/* Number in stock */}
+        <div className="flex flex-col gap-2 w-full">
+          <label>Number in stock</label>
+          <input
+            value={formData.stock || ""}
+            onChange={(e) =>
+              setFormData({ ...formData, stock: Number(e.target.value) })
+            }
+            type="number"
+            min="0"
+            className="bg-white/10 border border-white/50 rounded-md py-1 px-3"
+            placeholder="0"
           />
         </div>
 
