@@ -303,7 +303,7 @@ const ProductModal = ({
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
-            className="bg-white/10 border border-white/50 rounded-md py-1 px-3 min-h-[100px]"
+            className="bg-white/10 border border-white/50 rounded-md py-1 px-3 min-h-25"
             placeholder="Enter product description"
           />
         </div>

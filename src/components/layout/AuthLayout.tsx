@@ -1,4 +1,3 @@
-// import bgImg from "../../images/jpgs/AuthBackground.jpg";
 import bgImg2 from "../../images/jpgs/AuthTempBg.jpg";
 
 interface AuthLayoutProps {

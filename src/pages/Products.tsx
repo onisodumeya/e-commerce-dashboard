@@ -108,7 +108,9 @@ function Products() {
     }
   };
 
-  const handleDataFromChild = (data: any) => {};
+  const handleDataFromChild = (data: any) => {
+    data;
+  };
 
   return (
     <>

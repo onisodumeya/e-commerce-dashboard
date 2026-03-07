@@ -235,7 +235,9 @@ const salesData: SalesData[] = [
   },
 ];
 
-const handleDataFromChild = (data: any) => {};
+const handleDataFromChild = (data: any) => {
+  data;
+};
 
 function Sales() {
   return (

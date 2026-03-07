@@ -1,10 +1,8 @@
 import Sidebar from "../Sidebar";
 import MobileNav from "../MobileNav";
 import { useLocation } from "react-router-dom";
-import { LiaMoon, LiaSun } from "react-icons/lia";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -15,11 +13,6 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({
   children,
   onSendData,
 }) => {
-  const { theme, toggleTheme } = useTheme();
-  const [isDarkMode, setLightMode] = useState(true);
-
-  console.log(theme);
-
   const location = useLocation();
   const path = location.pathname;
 
@@ -35,24 +28,6 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({
     "Last 6 months",
     "Last 12 months",
   ];
-  const [active, setActive] = useState(0);
-
-  const [isTimeStampMenuOpen, setIsTimeStampMenuOpen] = useState(false);
-
-  const openTimeStampMenuMenu = () => {
-    if (isTimeStampMenuOpen === false) {
-      setIsTimeStampMenuOpen(true);
-    } else {
-      setIsTimeStampMenuOpen(false);
-    }
-  };
-
-  // function selectTimeStamp(value: number) {
-  //   setActive(value);
-  //   setIsTimeStampMenuOpen(false);
-  // }
-
-  const [savedTime, setSavedTime] = useState(localStorage.getItem("timeStamp"));
 
   const [option, setOption] = useState(() => {
     return localStorage.getItem("timeStamp") || "Today"; // Default value

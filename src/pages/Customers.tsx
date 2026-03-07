@@ -142,7 +142,9 @@ function Customers() {
     setCustomers(updatedCustomers);
   };
 
-  const handleDataFromChild = (data: any) => {};
+  const handleDataFromChild = (data: any) => {
+    data;
+  };
 
   return (
     <DashBoardLayout onSendData={handleDataFromChild}>

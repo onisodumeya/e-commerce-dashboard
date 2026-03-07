@@ -5,7 +5,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Label,
 } from "recharts";
 
 interface ProductData {
@@ -98,7 +97,7 @@ function TopProductsChart({ timeStamp }: Props) {
           >
             {rawData.map((entry, index) => (
               <Cell
-                key={`cell-${index}`}
+                key={`cell-${index ? index : entry}`}
                 fill={COLORS[index % COLORS.length]}
               />
             ))}
