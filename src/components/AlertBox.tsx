@@ -1,4 +1,4 @@
-import { PriBtn, TetBtn } from "./Buttons";
+import { PriBtn, TetBtn } from "./Buttons.tsx";
 import { useEffect } from "react";
 
 interface BtnFn {

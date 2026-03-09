@@ -1,12 +1,12 @@
-import DashBoardLayout from "../components/layout/DashboardLayout";
-import SummaryCard from "../components/SummaryCard";
+import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
+import SummaryCard from "../components/SummaryCard.tsx";
 import {
   MdWallet,
   MdOutlineArrowCircleUp,
   MdAccountCircle,
 } from "react-icons/md";
-import RevenueChart from "../components/charts/RevenueChart";
-import TopProductsChart from "../components/charts/TopProductsChart";
+import RevenueChart from "../components/charts/RevenueChart.tsx";
+import TopProductsChart from "../components/charts/TopProductsChart.tsx";
 import { useState } from "react";
 
 interface SummaryCardData {

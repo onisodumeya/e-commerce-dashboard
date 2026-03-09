@@ -1,7 +1,7 @@
 import { ChevronDown, X, Star } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
-import Modal from "./Modal";
-import { PriBtn, TetBtn } from "./Buttons";
+import Modal from "./Modal.tsx";
+import { PriBtn, TetBtn } from "./Buttons.tsx";
 
 interface ProductProps {
   id: string;

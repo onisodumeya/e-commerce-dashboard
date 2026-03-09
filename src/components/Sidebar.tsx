@@ -4,7 +4,7 @@ import { LayoutDashboard, Receipt, Package, LogOut, User2 } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
-import { logout } from "../utils/auth";
+import { logout } from "../utils/auth.tsx";
 
 function Sidebar() {
   const menuItems = [

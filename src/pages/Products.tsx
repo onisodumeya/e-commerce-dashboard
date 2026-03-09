@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import DashBoardLayout from "../components/layout/DashboardLayout";
-import ProductModal from "../components/ProductModal";
-import { PriBtn, SecBtn } from "../components/Buttons";
-import Alert from "../components/AlertBox";
+import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
+import ProductModal from "../components/ProductModal.tsx";
+import { PriBtn, SecBtn } from "../components/Buttons.tsx";
+import Alert from "../components/AlertBox.tsx";
 
 interface ProductProps {
   id: string;

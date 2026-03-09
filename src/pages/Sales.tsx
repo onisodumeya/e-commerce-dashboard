@@ -1,4 +1,4 @@
-import DashBoardLayout from "../components/layout/DashboardLayout";
+import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
 
 interface SalesData {
   id: string;

@@ -1,9 +1,9 @@
-import AuthForm from "../../components/AuthForm";
-import AuthLayout from "../../components/layout/AuthLayout";
+import AuthForm from "../../components/AuthForm.tsx";
+import AuthLayout from "../../components/layout/AuthLayout.tsx";
 import { useState, useEffect, useRef } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { signup } from "../../utils/auth";
-import { PriBtn } from "../../components/Buttons";
+import { signup } from "../../utils/auth.ts";
+import { PriBtn } from "../../components/Buttons.tsx";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);

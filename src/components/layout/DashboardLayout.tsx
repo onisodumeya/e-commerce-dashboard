@@ -1,5 +1,5 @@
-import Sidebar from "../Sidebar";
-import MobileNav from "../MobileNav";
+import Sidebar from "../Sidebar.tsx";
+import MobileNav from "../MobileNav.tsx";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";

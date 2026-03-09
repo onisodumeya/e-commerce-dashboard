@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import DashBoardLayout from "../components/layout/DashboardLayout";
-import { PriBtn, SecBtn } from "../components/Buttons";
-import Alert from "../components/AlertBox";
+import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
+import { PriBtn, SecBtn } from "../components/Buttons.tsx";
+import Alert from "../components/AlertBox.tsx";
 
 interface CustomerProps {
   id: number;

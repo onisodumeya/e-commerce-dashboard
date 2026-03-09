@@ -1,7 +1,7 @@
 import { MdAccountCircle } from "react-icons/md";
-import DashBoardLayout from "../components/layout/DashboardLayout";
+import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
 import { LogOut } from "lucide-react";
-import { logout } from "../utils/auth";
+import { logout } from "../utils/auth.ts";
 
 function Account() {
   const admin = localStorage.getItem("currentUser");
