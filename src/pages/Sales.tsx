@@ -277,10 +277,10 @@ function Sales() {
                     {purchase.quantity}
                   </td>
                   <td className="text-sm text-start py-2 px-3">
-                    ₦{purchase.unitPrice}
+                    ₦{purchase.unitPrice.toLocaleString()}
                   </td>
                   <td className="text-sm text-start py-2 px-3">
-                    ₦{purchase.unitPrice * purchase.quantity}
+                    ₦{(purchase.unitPrice * purchase.quantity).toLocaleString()}
                   </td>
                   <td className={`text-sm text-start py-2 px-3 `}>
                     <p

@@ -1,6 +1,7 @@
 import { ChevronDown, X, Star } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import Modal from "./Modal";
+import { PriBtn, TetBtn } from "./Buttons";
 
 interface ProductProps {
   id: string;
@@ -393,19 +394,11 @@ const ProductModal = ({
 
         {/* Buttons */}
         <div className="flex gap-3 mt-4">
-          <button
-            type="button"
-            onClick={handleClose}
-            className="flex-1 text-white px-3 py-2 bg-gray-600 rounded-md hover:bg-gray-700 cursor-pointer transition-colors duration-300"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSubmit}
-            className="flex-1 text-white px-3 py-2 bg-blue-700 rounded-md hover:bg-blue-800 cursor-pointer transition-colors duration-300"
-          >
-            {productToEdit ? "Update Product" : "Add Product"}
-          </button>
+          <TetBtn clickFn={() => handleClose} text="Cancel" />
+          <PriBtn
+            clickFn={() => handleSubmit}
+            text={productToEdit ? "Update Product" : "Add Product"}
+          />
         </div>
       </div>
     </Modal>

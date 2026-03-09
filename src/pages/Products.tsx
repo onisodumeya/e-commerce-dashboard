@@ -150,7 +150,7 @@ function Products() {
           cancel={cancelALert}
         />
 
-        <div className="mb-4">
+        <div className="mb-4 w-fit">
           <PriBtn clickFn={openAddModal} text="Add New Product" />
         </div>
 
@@ -160,7 +160,9 @@ function Products() {
             <p className="text-gray-400">
               Add your first product to get started
             </p>
-            <PriBtn clickFn={openAddModal} text="Add Product" />
+            <div className="w-fit">
+              <PriBtn clickFn={openAddModal} text="Add Product" />
+            </div>
           </div>
         ) : (
           <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">

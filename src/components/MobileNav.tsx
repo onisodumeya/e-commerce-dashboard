@@ -1,4 +1,10 @@
-import { LayoutDashboard, Receipt, Package, User2 } from "lucide-react";
+import {
+  LayoutDashboard,
+  Receipt,
+  Package,
+  User2,
+  UserCircle,
+} from "lucide-react";
 
 import { Link } from "react-router-dom";
 
@@ -8,6 +14,7 @@ function MobileNav() {
     { path: "/sales", label: "Sales", icon: Receipt },
     { path: "/customers", label: "Customers", icon: User2 },
     { path: "/Products", label: "Products", icon: Package },
+    { path: "/account", label: "Account", icon: UserCircle },
   ];
 
   return (

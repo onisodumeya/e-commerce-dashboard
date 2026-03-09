@@ -34,7 +34,7 @@ function Alert({
       >
         <div className="bg-gray-800 self-center max-w-96 px-5 py-3 rounded-md flex flex-col gap-5 items-center text-center justify-center text-white">
           <p>{alertText}</p>
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-col md:flex-row w-full gap-2 items-center">
             <PriBtn clickFn={confirm} text={priText} />
             <TetBtn clickFn={cancel} text={secText} />
           </div>

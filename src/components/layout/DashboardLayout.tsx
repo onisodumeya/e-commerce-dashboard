@@ -3,7 +3,6 @@ import MobileNav from "../MobileNav";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import Alert from "../AlertBox";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -71,7 +70,7 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({
                 <span>{option}</span>
 
                 <div
-                  className={`w-fit absolute flex flex-col gap-3 top-[120%] -left-10 md:left-0 items-start bg-gray-700 z-10 p-3 rounded-lg transition-all duration-300 ${!isOptionsMenuOpen ? "hidden" : ""}`}
+                  className={`w-fit absolute flex flex-col gap-3 top-[120%] right-0 items-start bg-gray-700 z-10 p-3 rounded-lg transition-all duration-300 ${!isOptionsMenuOpen ? "hidden" : ""}`}
                 >
                   {timeStamps.map((timeStamp, index) => (
                     <button
