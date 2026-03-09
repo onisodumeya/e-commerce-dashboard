@@ -23,6 +23,10 @@ function Products() {
     null,
   );
 
+  useEffect(() => {
+    document.title = "Products";
+  }, []);
+
   // Load products from localStorage on mount
   useEffect(() => {
     loadProducts();

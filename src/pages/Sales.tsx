@@ -1,4 +1,5 @@
 import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
+import { useEffect } from "react";
 
 interface SalesData {
   id: string;
@@ -240,6 +241,9 @@ const handleDataFromChild = (data: any) => {
 };
 
 function Sales() {
+  useEffect(() => {
+    document.title = "Sales";
+  }, []);
   return (
     <DashBoardLayout onSendData={handleDataFromChild}>
       {salesData.length === 0 ? (

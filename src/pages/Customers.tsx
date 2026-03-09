@@ -12,6 +12,10 @@ interface CustomerProps {
 }
 
 function Customers() {
+  useEffect(() => {
+    document.title = "Customers";
+  }, []);
+
   const customers = [
     {
       id: 1,

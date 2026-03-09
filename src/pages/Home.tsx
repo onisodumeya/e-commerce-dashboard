@@ -7,7 +7,7 @@ import {
 } from "react-icons/md";
 import RevenueChart from "../components/charts/RevenueChart.tsx";
 import TopProductsChart from "../components/charts/TopProductsChart.tsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface SummaryCardData {
   revenue: number;
@@ -96,6 +96,10 @@ const summaryDataByTimestamp: Record<string, SummaryCardData> = {
 };
 
 function Home() {
+  useEffect(() => {
+    document.title = "Overview";
+  }, []);
+
   const [timeStamp, setTimeStamp] = useState(() => {
     return localStorage.getItem("timeStamp") || "Last 7 days";
   });

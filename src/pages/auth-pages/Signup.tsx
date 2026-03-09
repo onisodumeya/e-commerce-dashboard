@@ -17,6 +17,10 @@ function Signup() {
 
   const checkPwdRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    document.title = "Sign up";
+  }, []);
+
   const handleSignup = () => {
     // Validate inputs
     if (!email || !password || !username) {

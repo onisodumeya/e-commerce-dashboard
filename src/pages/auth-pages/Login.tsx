@@ -1,6 +1,6 @@
 import AuthLayout from "../../components/layout/AuthLayout.tsx";
 import AuthForm from "../../components/AuthForm.tsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { login } from "../../utils/auth.ts";
 import { PriBtn } from "../../components/Buttons.tsx";
@@ -10,6 +10,10 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    document.title = "Login";
+  }, []);
 
   const handleLogin = () => {
     // Validate inputs
