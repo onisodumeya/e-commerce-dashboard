@@ -93,10 +93,10 @@ function Signup() {
           />
         </label>
 
-        <div className="flex gap-5 items-center">
+        <div className="flex flex-col md:flex-row w-full gap-5 items-center">
           <label className="flex flex-col items-start gap-2 w-full">
             <label>Password</label>
-            <div className="relative">
+            <div className="relative w-full">
               <input
                 type={showPassword ? "text" : "password"}
                 className="pr-10 bg-black/5 border-white/40 border outline-blue-800 px-5 py-2 rounded-md w-full"
@@ -125,7 +125,7 @@ function Signup() {
 
           <label className="flex flex-col items-start gap-2 w-full">
             <label>Confirm Password</label>
-            <div className="relative">
+            <div className="relative w-full">
               <input
                 ref={checkPwdRef}
                 type={showPassword ? "text" : "password"}
