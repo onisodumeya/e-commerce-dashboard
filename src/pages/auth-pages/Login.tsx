@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { login } from "../../utils/auth.ts";
 import { PriBtn } from "../../components/Buttons.tsx";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -75,12 +76,12 @@ function Login() {
         <PriBtn text="Login" clickFn={handleLogin} />
         <p>
           Don't have an account?{" "}
-          <a
-            href="/signup"
+          <Link
+            to="/signup"
             className="text-blue-400 font-medium hover:text-blue-500 hover:-translate-y-0.5 duration-500 transition-all"
           >
             Sign up Here
-          </a>
+          </Link>
         </p>
       </AuthForm>
     </AuthLayout>
