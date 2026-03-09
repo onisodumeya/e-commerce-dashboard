@@ -161,9 +161,7 @@ const ProductModal = ({
   };
 
   // Handle submit
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     // Validate
     if (!formData.name.trim()) {
       alert("Please enter a product name");
@@ -396,7 +394,7 @@ const ProductModal = ({
         <div className="flex gap-3 mt-4">
           <TetBtn clickFn={() => handleClose} text="Cancel" />
           <PriBtn
-            clickFn={() => handleSubmit}
+            clickFn={handleSubmit}
             text={productToEdit ? "Update Product" : "Add Product"}
           />
         </div>
