@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import DashBoardLayout from "../components/layout/DashboardLayout";
 import ProductModal from "../components/ProductModal";
+import { PriBtn, SecBtn } from "../components/Buttons";
+import Alert from "../components/AlertBox";
 
 interface ProductProps {
   id: string;
@@ -90,27 +92,44 @@ function Products() {
     }
   };
 
+  const [productId, setProductId] = useState("");
+
   // Handle delete
-  const handleDelete = (id: string) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this product? This action cannot be undone.",
-    );
-
-    if (!confirmDelete) return;
-
+  const handleDelete = () => {
     try {
-      const updatedProducts = products.filter((product) => product.id !== id);
+      const updatedProducts = products.filter(
+        (product) => product.id !== productId,
+      );
       localStorage.setItem("products", JSON.stringify(updatedProducts));
       loadProducts();
+      setAlertOpen(false);
     } catch (error) {
       console.error("Error deleting product:", error);
-      alert("Failed to delete product. Please try again.");
     }
   };
 
   const handleDataFromChild = (data: any) => {
     data;
   };
+
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  function openALert(id: string) {
+    if (alertOpen) {
+      return;
+    } else {
+      setProductId(id);
+      setAlertOpen(true);
+    }
+  }
+
+  function cancelALert() {
+    if (!alertOpen) {
+      return;
+    } else {
+      setAlertOpen(false);
+    }
+  }
 
   return (
     <>
@@ -122,13 +141,17 @@ function Products() {
       />
 
       <DashBoardLayout onSendData={handleDataFromChild}>
+        <Alert
+          alertOpen={alertOpen}
+          alertText="Are you sure you want to delete this product? This action cannot be undone."
+          priText="Delete product"
+          secText="Cancel"
+          confirm={handleDelete}
+          cancel={cancelALert}
+        />
+
         <div className="mb-4">
-          <button
-            onClick={openAddModal}
-            className="text-white px-4 py-2 bg-blue-700 rounded-md hover:bg-blue-800 cursor-pointer transition-colors duration-300"
-          >
-            Add New Product
-          </button>
+          <PriBtn clickFn={openAddModal} text="Add New Product" />
         </div>
 
         {products.length === 0 ? (
@@ -137,12 +160,7 @@ function Products() {
             <p className="text-gray-400">
               Add your first product to get started
             </p>
-            <button
-              onClick={openAddModal}
-              className="text-white px-4 py-2 bg-blue-700 rounded-md hover:bg-blue-800 cursor-pointer transition-colors duration-300"
-            >
-              Add Product
-            </button>
+            <PriBtn clickFn={openAddModal} text="Add Product" />
           </div>
         ) : (
           <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
@@ -227,18 +245,14 @@ function Products() {
                     </td>
                     <td className="px-3 py-2">
                       <div className="flex gap-2">
-                        <button
-                          onClick={() => openEditModal(product)}
-                          className="px-3 py-1 rounded-md text-sm bg-blue-700 hover:bg-blue-600 transition-colors duration-300 cursor-pointer"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(product.id)}
-                          className="px-3 py-1 rounded-md text-sm bg-red-700 hover:bg-red-600 transition-colors duration-300 cursor-pointer"
-                        >
-                          Delete
-                        </button>
+                        <PriBtn
+                          clickFn={() => openEditModal(product)}
+                          text="Edit"
+                        />
+                        <SecBtn
+                          clickFn={() => openALert(product.id)}
+                          text="Delete"
+                        />
                       </div>
                     </td>
                   </tr>

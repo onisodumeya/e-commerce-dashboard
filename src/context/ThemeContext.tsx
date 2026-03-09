@@ -33,9 +33,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
     // Save to localStorage
     localStorage.setItem("theme", theme);
-
-    console.log("Theme applied:", theme); // ✅ Debug log
-    console.log("HTML classes:", root.className); // ✅ Debug log
   }, [theme]);
 
   const toggleTheme = () => {

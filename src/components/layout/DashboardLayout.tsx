@@ -3,6 +3,7 @@ import MobileNav from "../MobileNav";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import Alert from "../AlertBox";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -50,7 +51,7 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({
   }
 
   return (
-    <div className="p-2 lg:p-5 lg:pl-64 flex items-start min-h-screen bg-white dark:bg-gray-950">
+    <div className="p-2 lg:p-5 lg:pl-64 flex items-start min-h-screen bg-white dark:bg-gray-950 relative">
       <Sidebar />
       <MobileNav />
       <section className="flex flex-col gap-3 w-full py-2 px-3 pb-20 lg:pb-0">
@@ -60,7 +61,7 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({
           </h1>
           <div className={`gap-3 items-center flex`}>
             <div className="w-full flex items-center justify-between">
-              <button
+              <div
                 className={`text-gray-300 text-sm items-center cursor-pointer relative bg-gray-900 hover:bg-gray-800 p-2 rounded-lg transition-all duration-300 ${path !== "/" ? "hidden" : "flex"}`}
                 onClick={openOptionsMenu}
               >
@@ -82,14 +83,8 @@ const DashBoardLayout: React.FC<DashboardLayoutProps> = ({
                     </button>
                   ))}
                 </div>
-              </button>
+              </div>
             </div>
-            {/* <div
-              onClick={toggleTheme}
-              className="bg-transparent p-1 rounded-full hover:scale-105 transition-all hover:bg-white/10 duration-300 cursor-pointer"
-            >
-              {theme === "dark" ? <LiaMoon size={30} /> : <LiaSun size={30} />}
-            </div> */}
           </div>
         </header>
         {children}
