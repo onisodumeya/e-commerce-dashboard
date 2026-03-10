@@ -14,6 +14,7 @@ function Signup() {
   const [openAlert, setOpenAlert] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const checkPwdRef = useRef<HTMLInputElement>(null);
 
@@ -22,8 +23,10 @@ function Signup() {
   }, []);
 
   const handleSignup = () => {
+    setLoading(true);
     // Validate inputs
     if (!email || !password || !username) {
+      setLoading(false);
       setOpenAlert(true);
       setTimeout(() => {
         setOpenAlert(false);
@@ -43,6 +46,9 @@ function Signup() {
 
     // Save to localStorage
     signup(mockUser, mockToken);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
 
     // Redirect to dashboard
   };
@@ -163,7 +169,10 @@ function Signup() {
           <p className="text-red-500 text-sm">Passwords do not match</p>
         )}
 
-        <PriBtn text="Create account" clickFn={handleSignup} />
+        <PriBtn
+          text={loading ? "Signing in" : "Sign in"}
+          clickFn={handleSignup}
+        />
 
         <p>
           Already have an account?{" "}

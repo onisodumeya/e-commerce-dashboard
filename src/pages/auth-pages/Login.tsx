@@ -10,12 +10,14 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.title = "Login";
   }, []);
 
   const handleLogin = () => {
+    setLoading(true);
     // Validate inputs
     if (!email || !password) {
       alert("Please enter email and password");
@@ -32,6 +34,9 @@ function Login() {
       // Save to localStorage
       login(mockUser, mockToken);
     }
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   };
 
   return (
@@ -77,7 +82,10 @@ function Login() {
           </div>
         </label>
 
-        <PriBtn text="Login" clickFn={handleLogin} />
+        <PriBtn
+          text={loading ? "Logging in" : "Log in"}
+          clickFn={handleLogin}
+        />
         <p>
           Don't have an account?{" "}
           <Link
