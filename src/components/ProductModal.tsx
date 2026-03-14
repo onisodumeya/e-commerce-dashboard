@@ -2,6 +2,7 @@ import { ChevronDown, X, Star } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import Modal from "./Modal.tsx";
 import { PriBtn, TetBtn } from "./Buttons.tsx";
+import { useTheme } from "../context/ThemeContext.tsx";
 
 interface ProductProps {
   id: string;
@@ -201,13 +202,17 @@ const ProductModal = ({
     closeModal();
   };
 
+  const { theme } = useTheme();
+
   return (
     <Modal openModal={openModal}>
-      <div className="text-white flex flex-col gap-5">
+      <div
+        className={`${theme == "dark" ? "text-white" : "text-black"} flex flex-col gap-5`}
+      >
         <div className="flex items-start justify-between">
           {/* Image section */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-white font-semibold">Product Images</h4>
+            <h4 className="font-semibold">Product Images</h4>
 
             <div className="flex flex-wrap gap-3">
               {/* Display existing images */}
@@ -251,11 +256,13 @@ const ProductModal = ({
               ))}
 
               {/* Add new image button */}
-              <div className="w-24 h-24 bg-white/10 border border-dashed border-white/50 rounded-md flex items-center justify-center">
+              <div
+                className={`w-24 h-24 ${theme == "dark" ? "bg-white/10 border-white/50" : "bg-black/10 border-black/50"} border border-dashed rounded-md flex items-center justify-center`}
+              >
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="text-white/70 hover:text-white text-3xl h-full w-full cursor-pointer"
+                  className={`${theme == "dark" ? "text-white/70 hover:text-white" : "text-black/50 hover:text-black"} text-3xl h-full w-full cursor-pointer transition-colors duration-300`}
                 >
                   +
                 </button>
@@ -289,7 +296,7 @@ const ProductModal = ({
             value={formData.name}
             type="text"
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="bg-white/10 border border-white/50 rounded-md py-1 px-3"
+            className={`${theme == "dark" ? "bg-white/10 border-white/50" : "bg-black/10 border-black/50"} border rounded-md py-1 px-3`}
             placeholder="Enter product name"
           />
         </div>
@@ -302,7 +309,7 @@ const ProductModal = ({
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
-            className="bg-white/10 border border-white/50 rounded-md py-1 px-3 min-h-25"
+            className={`${theme == "dark" ? "bg-white/10 border-white/50" : "bg-black/10 border-black/50"} border rounded-md py-1 px-3 min-h-25`}
             placeholder="Enter product description"
           />
         </div>
@@ -317,7 +324,7 @@ const ProductModal = ({
             }
             type="number"
             min="0"
-            className="bg-white/10 border border-white/50 rounded-md py-1 px-3"
+            className={`${theme == "dark" ? "bg-white/10 border-white/50" : "bg-black/10 border-black/50"} border rounded-md py-1 px-3`}
             placeholder="0"
           />
         </div>
@@ -332,7 +339,7 @@ const ProductModal = ({
             }
             type="number"
             min="0"
-            className="bg-white/10 border border-white/50 rounded-md py-1 px-3"
+            className={`${theme == "dark" ? "bg-white/10 border-white/50" : "bg-black/10 border-black/50"} border rounded-md py-1 px-3`}
             placeholder="0"
           />
         </div>
@@ -344,7 +351,7 @@ const ProductModal = ({
             {/* Options Menu */}
             <button
               type="button"
-              className="text-gray-300 bg-gray-900 w-fit px-3 py-1 rounded-md text-sm flex items-center cursor-pointer relative"
+              className={`${theme == "dark" ? "bg-blue-800 hover:bg-blue-900 text-white" : "bg-blue-200 hover:bg-blue-300 text-black"} w-fit px-3 py-1 rounded-md text-sm flex items-center cursor-pointer relative transition-colors duration-300`}
               onClick={toggleOptionsMenu}
             >
               <ChevronDown
@@ -355,7 +362,9 @@ const ProductModal = ({
               <span>{option}</span>
 
               {isOptionsMenuOpen && (
-                <div className="w-fit absolute flex flex-col gap-3 bottom-[150%] -left-10 md:left-0 items-start bg-gray-900 z-10 p-3 rounded-lg">
+                <div
+                  className={`w-fit absolute flex flex-col gap-3 bottom-[150%] -left-10 md:left-0 items-start ${theme == "dark" ? "bg-gray-900" : "bg-blue-200"} z-10 p-3 rounded-lg`}
+                >
                   <button
                     type="button"
                     onClick={() => handleOptionChange("Clothes")}
@@ -392,7 +401,7 @@ const ProductModal = ({
 
         {/* Buttons */}
         <div className="flex gap-3 mt-4">
-          <TetBtn clickFn={() => handleClose} text="Cancel" />
+          <TetBtn clickFn={handleClose} text="Cancel" />
           <PriBtn
             clickFn={handleSubmit}
             text={productToEdit ? "Update Product" : "Add Product"}

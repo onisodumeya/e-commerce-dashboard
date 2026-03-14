@@ -6,6 +6,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { useTheme } from "../../context/ThemeContext";
 
 interface ProductData {
   name: string;
@@ -73,11 +74,13 @@ function TopProductsChart({ timeStamp }: Props) {
   const rawData =
     productDataByTimestamp[timeStamp] || productDataByTimestamp["Today"];
   const isMobile = window.innerWidth < 800;
+
+  const { theme } = useTheme();
   return (
-    <div className="bg-white dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow w-full">
-      <h3 className="text-lg font-semibold mb-4 dark:text-white">
-        Top Products
-      </h3>
+    <div
+      className={`${theme == "dark" ? "bg-[#000a22]" : "bg-[#f3f6ff]"} p-3 md:p-6 rounded-lg shadow w-full transition-colors duration-300`}
+    >
+      <h3 className="text-lg font-semibold mb-4 ">Top Products</h3>
       <ResponsiveContainer width="100%" height={isMobile ? 250 : 300}>
         <PieChart>
           <Pie

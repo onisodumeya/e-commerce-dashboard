@@ -8,6 +8,7 @@ import {
 import RevenueChart from "../components/charts/RevenueChart.tsx";
 import TopProductsChart from "../components/charts/TopProductsChart.tsx";
 import { useState, useEffect } from "react";
+import { useTheme } from "../context/ThemeContext.tsx";
 
 interface SummaryCardData {
   revenue: number;
@@ -112,9 +113,13 @@ function Home() {
   const data =
     summaryDataByTimestamp[timeStamp] || summaryDataByTimestamp["Last 7 days"];
 
+  const { theme } = useTheme();
+
   return (
     <DashBoardLayout onSendData={handleDataFromChild}>
-      <div className="flex lg:grid lg:grid-cols-3 gap-3 w-full bg-gray-800/30 text-white rounded-lg p-2 overflow-x-auto no-scrollbar">
+      <div
+        className={`flex lg:grid lg:grid-cols-3 gap-3 w-full ${theme == "dark" ? "bg-[#000a22]" : "bg-[#f3f6ff]"} rounded-lg p-2 overflow-x-auto no-scrollbar transition-colors duration-300`}
+      >
         {/* Revenue Card */}
         <SummaryCard
           title="Revenue"

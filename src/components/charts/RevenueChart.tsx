@@ -7,6 +7,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useEffect, useState } from "react";
+import { useTheme } from "../../context/ThemeContext";
 
 interface Props {
   timeStamp: string;
@@ -91,11 +93,23 @@ function RevenueChart({ timeStamp }: Props) {
     return `₦${value.toLocaleString()}`;
   };
 
+  const { theme } = useTheme();
+
+  const [toolTipBg, setToolTipBg] = useState("#1f2937");
+
+  useEffect(() => {
+    if (theme == "dark") {
+      setToolTipBg("#ffffff");
+    } else {
+      setToolTipBg("#1f2937");
+    }
+  }, [theme]);
+
   return (
-    <div className="bg-white dark:bg-gray-800 p-3 md:p-6 h-full rounded-lg shadow w-full flex flex-col">
-      <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-        Revenue Overview
-      </h3>
+    <div
+      className={`${theme == "dark" ? "bg-[#000a22]" : "bg-[#f3f6ff]"} p-3 md:p-6 h-full rounded-lg shadow w-full flex flex-col transition-colors duration-300`}
+    >
+      <h3 className="text-lg font-semibold mb-4">Revenue Overview</h3>
 
       <ResponsiveContainer width="100%" height={isMobile ? 250 : 300}>
         <LineChart data={chartData}>
@@ -111,7 +125,7 @@ function RevenueChart({ timeStamp }: Props) {
           <Tooltip
             formatter={formatTooltip}
             contentStyle={{
-              backgroundColor: "#1f2937",
+              backgroundColor: toolTipBg,
               border: "none",
               borderRadius: "8px",
               color: "#fff",

@@ -9,3 +9,29 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+:root {
+  --bg: white;
+  --chart-bg: rgba(166, 199, 255, 0.2);
+  --user-card: rgba(168, 168, 168, 0.2);
+  --dropdown: rgb(154, 198, 255);
+  --active-link: rgb(154, 198, 255);
+  --text: black;
+}
+
+[data-theme="dark"] {
+  --bg: #000716;
+  /* --bg: #000614; */
+  --chart-bg: rgba(0, 2, 144, 0.1);
+  --user-card: rgba(0, 2, 144, 0.3);
+  --dropdown: rgb(0, 2, 144);
+  --active-link: rgb(0, 2, 144);
+  --text: white;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: ease-in-out;
+  transition-duration: 300ms;
+}
