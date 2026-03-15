@@ -1,4 +1,5 @@
 import { TrendingDown, TrendingUp } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 interface SummaryCardProps {
   children: React.ReactNode;
@@ -19,8 +20,11 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
   iconBg,
   currency,
 }) => {
+  const { theme } = useTheme();
   return (
-    <div className="p-5 bg-white dark:bg-gray-800 rounded-lg flex flex-col justify-between gap-5 shrink-0 w-72 lg:w-auto">
+    <div
+      className={`p-5 ${theme == "dark" ? "bg-gray-950" : "bg-white"} rounded-lg flex flex-col justify-between gap-5 shrink-0 w-72 lg:w-auto transition-colors duration-300`}
+    >
       <div className="flex gap-2 items-center">
         <div className={`p-2 rounded-full ${iconBg}`}>{children}</div>
         <h2 className="text-xl font-medium">{title}</h2>

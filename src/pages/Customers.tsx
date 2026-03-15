@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
 import { PriBtn, SecBtn } from "../components/Buttons.tsx";
 import Alert from "../components/AlertBox.tsx";
+import { useTheme } from "../context/ThemeContext.tsx";
 
 interface CustomerProps {
   id: number;
@@ -218,6 +219,8 @@ function Customers() {
     localStorage.setItem("customers", JSON.stringify(updatedCustomers));
   };
 
+  const { theme } = useTheme();
+
   return (
     <DashBoardLayout onSendData={handleDataFromChild}>
       <Alert
@@ -234,9 +237,13 @@ function Customers() {
         </div>
       ) : (
         <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
-          <table className="text-gray-900 dark:text-white w-full text-nowrap">
-            <thead className="bg-gray-200 dark:bg-gray-600">
-              <tr className="border-b-2 border-gray-300 dark:border-gray-700">
+          <table
+            className={`${theme == "dark" ? "text-white" : "text-black"} w-full text-nowrap text-xs md:text-sm`}
+          >
+            <thead>
+              <tr
+                className={`${theme == "dark" ? "bg-blue-900/30" : "bg-gray-200"} transition-colors duration-300`}
+              >
                 <th className="text-start py-2 px-3">S/N</th>
                 <th className="text-start py-2 px-3">Name</th>
                 <th className="text-start py-2 px-3">Email</th>
@@ -249,7 +256,7 @@ function Customers() {
               {recentCustomers.map((customer, key) => (
                 <tr
                   key={key}
-                  className={`transition-colors duration-300 ease-in-out ${(key + 1) % 2 != 0 ? "bg-gray-950 hover:bg-gray-900" : "bg-gray-800 hover:bg-gray-900"} ${customer.isDeactivated ? "bg-red-950" : ""}`}
+                  className={`border-b ${theme == "dark" ? "border-b-gray-700" : "border-b-gray-400"} transition-colors duration-300 ease-in-out ${(key + 1) % 2 != 0 ? "bg-transparent" : `${theme == "dark" ? "bg-gray-800" : "bg-gray-100"}`} ${customer.isDeactivated ? "bg-red-600/30!" : ""}`}
                 >
                   <td className="text-start py-2 px-3">{key + 1}</td>
                   <td className="text-start py-2 px-3">{customer.name}</td>

@@ -1,5 +1,6 @@
 import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
 import { useEffect } from "react";
+import { useTheme } from "../context/ThemeContext.tsx";
 
 interface SalesData {
   id: string;
@@ -244,6 +245,8 @@ function Sales() {
   useEffect(() => {
     document.title = "Sales";
   }, []);
+
+  const { theme } = useTheme();
   return (
     <DashBoardLayout onSendData={handleDataFromChild}>
       {salesData.length === 0 ? (
@@ -252,9 +255,13 @@ function Sales() {
         </div>
       ) : (
         <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
-          <table className="text-white w-full text-nowrap">
+          <table
+            className={`${theme == "dark" ? "text-white" : "text-black"} w-full text-nowrap text-xs md:text-sm`}
+          >
             <thead>
-              <tr className="border-b-2 border-gray-700 bg-gray-600">
+              <tr
+                className={`${theme == "dark" ? "bg-blue-900/30" : "bg-gray-200"} transition-colors duration-300`}
+              >
                 <th className="text-start py-2 px-3">S/N</th>
                 <th className="text-start py-2 px-3">Product</th>
                 <th className="text-start py-2 px-3">Customer</th>
@@ -268,27 +275,21 @@ function Sales() {
               {salesData.map((purchase, key) => (
                 <tr
                   key={key}
-                  className={`border-b-2 border-gray-700 transition-colors duration-300 ease-in-out ${(key + 1) % 2 != 0 ? "bg-gray-950 hover:bg-gray-900" : "bg-gray-800 hover:bg-gray-900"}`}
+                  className={`border-b ${theme == "dark" ? "border-b-gray-700" : "border-b-gray-400"} transition-colors duration-300 ease-in-out ${(key + 1) % 2 != 0 ? "bg-transparent" : `${theme == "dark" ? "bg-gray-800" : "bg-gray-100"}`}`}
                 >
-                  <td className="text-sm text-start py-2 px-3">{key + 1}</td>
-                  <td className="text-sm text-start py-2 px-3">
-                    {purchase.product}
-                  </td>
-                  <td className="text-sm text-start py-2 px-3">
-                    {purchase.customer}
-                  </td>
-                  <td className="text-sm text-start py-2 px-3">
-                    {purchase.quantity}
-                  </td>
-                  <td className="text-sm text-start py-2 px-3">
+                  <td className=" text-start py-2 px-3">{key + 1}</td>
+                  <td className=" text-start py-2 px-3">{purchase.product}</td>
+                  <td className=" text-start py-2 px-3">{purchase.customer}</td>
+                  <td className=" text-start py-2 px-3">{purchase.quantity}</td>
+                  <td className=" text-start py-2 px-3">
                     ₦{purchase.unitPrice.toLocaleString()}
                   </td>
-                  <td className="text-sm text-start py-2 px-3">
+                  <td className=" text-start py-2 px-3">
                     ₦{(purchase.unitPrice * purchase.quantity).toLocaleString()}
                   </td>
-                  <td className={`text-sm text-start py-2 px-3 `}>
+                  <td className={` text-start py-2 px-3 `}>
                     <p
-                      className={`text-center p-1 rounded-full ${purchase.status === "completed" ? "bg-green-500" : purchase.status === "pending" ? "bg-yellow-500" : "bg-red-700"}`}
+                      className={`text-center text-white py-1 px-2 rounded-full ${purchase.status === "completed" ? "bg-green-500" : purchase.status === "pending" ? "bg-yellow-500" : "bg-red-700"}`}
                     >
                       {purchase.status}
                     </p>

@@ -3,6 +3,7 @@ import DashBoardLayout from "../components/layout/DashboardLayout.tsx";
 import ProductModal from "../components/ProductModal.tsx";
 import { PriBtn, SecBtn } from "../components/Buttons.tsx";
 import Alert from "../components/AlertBox.tsx";
+import { useTheme } from "../context/ThemeContext.tsx";
 
 interface ProductProps {
   id: string;
@@ -135,6 +136,8 @@ function Products() {
     }
   }
 
+  const { theme } = useTheme();
+
   return (
     <>
       <ProductModal
@@ -160,7 +163,11 @@ function Products() {
 
         {products.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full min-h-[80vh] gap-4">
-            <p className="text-white text-xl">No Products Yet</p>
+            <p
+              className={`${theme == "dark" ? "text-white" : "text-black"} text-xl`}
+            >
+              No Products Yet
+            </p>
             <p className="text-gray-400">
               Add your first product to get started
             </p>
@@ -170,9 +177,13 @@ function Products() {
           </div>
         ) : (
           <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
-            <table className="text-white text-nowrap w-full">
-              <thead className="bg-gray-600 border-b-2 border-gray-700">
-                <tr>
+            <table
+              className={`${theme == "dark" ? "text-white" : "text-black"} text-nowrap w-full text-xs md:text-sm`}
+            >
+              <thead>
+                <tr
+                  className={`${theme == "dark" ? "bg-blue-900/30" : "bg-gray-200"} transition-colors duration-300`}
+                >
                   <th className="px-3 py-2 text-start">S/N</th>
                   <th className="px-3 py-2 text-start">Image</th>
                   <th className="px-3 py-2 text-start">Product Name</th>
@@ -187,11 +198,7 @@ function Products() {
                 {products.map((product, index) => (
                   <tr
                     key={product.id}
-                    className={`border-b-2 border-gray-700 transition-colors duration-300 ease-in-out ${
-                      (index + 1) % 2 === 0
-                        ? "bg-gray-800 hover:bg-gray-900"
-                        : "hover:bg-gray-900"
-                    }`}
+                    className={`border-b ${theme == "dark" ? "border-b-gray-700" : "border-b-gray-400"} transition-colors duration-300 ease-in-out ${(index + 1) % 2 != 0 ? "bg-transparent" : `${theme == "dark" ? "bg-gray-800" : "bg-gray-100"}`}`}
                   >
                     <td className="text-start py-2 px-3">{index + 1}</td>
                     <td className="px-3 py-2">
@@ -211,7 +218,7 @@ function Products() {
                       )}
                     </td>
                     <td className="px-3 py-2">{product.title}</td>
-                    <td className="px-3 py-2 text-sm">
+                    <td className="px-3 py-2 ">
                       {product.description
                         ? product.description.slice(0, 30) + "..."
                         : "No description"}
@@ -224,7 +231,7 @@ function Products() {
                         {product.sizes && product.sizes.length > 0 ? (
                           <>
                             {product.sizes.slice(0, 3).map((size, idx) => (
-                              <span key={idx} className="text-sm">
+                              <span key={idx} className="">
                                 {size}
                                 {idx < 2 && idx < product.sizes.length - 1
                                   ? ","
@@ -232,13 +239,11 @@ function Products() {
                               </span>
                             ))}
                             {product.sizes.length > 3 && (
-                              <span className="text-sm">...</span>
+                              <span className="">...</span>
                             )}
                           </>
                         ) : (
-                          <span className="text-gray-400 text-sm">
-                            No sizes
-                          </span>
+                          <span className="text-gray-400 ">No sizes</span>
                         )}
                       </div>
                     </td>
