@@ -178,7 +178,7 @@ function Products() {
         ) : (
           <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
             <table
-              className={`${theme == "dark" ? "text-white" : "text-black"} text-nowrap w-full`}
+              className={`${theme == "dark" ? "text-white" : "text-black"} text-nowrap w-full text-xs md:text-sm`}
             >
               <thead>
                 <tr
@@ -218,7 +218,7 @@ function Products() {
                       )}
                     </td>
                     <td className="px-3 py-2">{product.title}</td>
-                    <td className="px-3 py-2 text-sm">
+                    <td className="px-3 py-2 ">
                       {product.description
                         ? product.description.slice(0, 30) + "..."
                         : "No description"}
@@ -231,7 +231,7 @@ function Products() {
                         {product.sizes && product.sizes.length > 0 ? (
                           <>
                             {product.sizes.slice(0, 3).map((size, idx) => (
-                              <span key={idx} className="text-sm">
+                              <span key={idx} className="">
                                 {size}
                                 {idx < 2 && idx < product.sizes.length - 1
                                   ? ","
@@ -239,13 +239,11 @@ function Products() {
                               </span>
                             ))}
                             {product.sizes.length > 3 && (
-                              <span className="text-sm">...</span>
+                              <span className="">...</span>
                             )}
                           </>
                         ) : (
-                          <span className="text-gray-400 text-sm">
-                            No sizes
-                          </span>
+                          <span className="text-gray-400 ">No sizes</span>
                         )}
                       </div>
                     </td>

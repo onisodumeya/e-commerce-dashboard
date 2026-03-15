@@ -1,4 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
+import { useEffect } from "react";
 interface Props {
   openModal: boolean;
   children: React.ReactNode;
@@ -6,6 +7,14 @@ interface Props {
 
 const Modal: React.FC<Props> = ({ openModal, children }) => {
   const { theme } = useTheme();
+
+  useEffect(() => {
+    if (openModal) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+  }, [openModal]);
   return (
     <div
       className={`h-screen w-full bg-black/50 absolute top-0 left-0 z-50 items-center justify-center px-5 ${openModal ? "flex" : "hidden"}`}

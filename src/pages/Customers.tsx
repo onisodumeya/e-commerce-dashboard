@@ -238,7 +238,7 @@ function Customers() {
       ) : (
         <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
           <table
-            className={`${theme == "dark" ? "text-white" : "text-black"} w-full text-nowrap`}
+            className={`${theme == "dark" ? "text-white" : "text-black"} w-full text-nowrap text-xs md:text-sm`}
           >
             <thead>
               <tr

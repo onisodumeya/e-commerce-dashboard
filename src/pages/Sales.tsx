@@ -256,7 +256,7 @@ function Sales() {
       ) : (
         <div className="w-full overflow-hidden overflow-x-auto no-scrollbar">
           <table
-            className={`${theme == "dark" ? "text-white" : "text-black"} w-full text-nowrap`}
+            className={`${theme == "dark" ? "text-white" : "text-black"} w-full text-nowrap text-xs md:text-sm`}
           >
             <thead>
               <tr
@@ -277,25 +277,19 @@ function Sales() {
                   key={key}
                   className={`border-b ${theme == "dark" ? "border-b-gray-700" : "border-b-gray-400"} transition-colors duration-300 ease-in-out ${(key + 1) % 2 != 0 ? "bg-transparent" : `${theme == "dark" ? "bg-gray-800" : "bg-gray-100"}`}`}
                 >
-                  <td className="text-sm text-start py-2 px-3">{key + 1}</td>
-                  <td className="text-sm text-start py-2 px-3">
-                    {purchase.product}
-                  </td>
-                  <td className="text-sm text-start py-2 px-3">
-                    {purchase.customer}
-                  </td>
-                  <td className="text-sm text-start py-2 px-3">
-                    {purchase.quantity}
-                  </td>
-                  <td className="text-sm text-start py-2 px-3">
+                  <td className=" text-start py-2 px-3">{key + 1}</td>
+                  <td className=" text-start py-2 px-3">{purchase.product}</td>
+                  <td className=" text-start py-2 px-3">{purchase.customer}</td>
+                  <td className=" text-start py-2 px-3">{purchase.quantity}</td>
+                  <td className=" text-start py-2 px-3">
                     ₦{purchase.unitPrice.toLocaleString()}
                   </td>
-                  <td className="text-sm text-start py-2 px-3">
+                  <td className=" text-start py-2 px-3">
                     ₦{(purchase.unitPrice * purchase.quantity).toLocaleString()}
                   </td>
-                  <td className={`text-sm text-start py-2 px-3 `}>
+                  <td className={` text-start py-2 px-3 `}>
                     <p
-                      className={`text-center text-white p-1 rounded-full ${purchase.status === "completed" ? "bg-green-500" : purchase.status === "pending" ? "bg-yellow-500" : "bg-red-700"}`}
+                      className={`text-center text-white py-1 px-2 rounded-full ${purchase.status === "completed" ? "bg-green-500" : purchase.status === "pending" ? "bg-yellow-500" : "bg-red-700"}`}
                     >
                       {purchase.status}
                     </p>
